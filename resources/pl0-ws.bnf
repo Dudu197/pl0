@@ -1,0 +1,5 @@
+ws-or-comment = (#'\s+' | comment)+ .
+<comment> = line-comment | block-comment .
+line-comment = <'//'> #'[^\n\r]*' .
+block-comment = <'(*'> inside-comment* <'*)'> .
+<inside-comment> = !( '*)' | '(*' ) #'.|[\n\r]' | block-comment .
