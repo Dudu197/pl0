@@ -1,0 +1,22 @@
+(* -*- mode:pascal; -*-
+ * Exemplo de programa em PL/0.
+ * Realiza comparação se valor a é maior que b.
+ *)
+
+var x, y, z, q, r, n, f;
+
+procedure greater;
+var a, b, r;
+begin
+  a := x;
+  b := y;
+  if a > b then r := a;
+  if b > a then r := b;
+  !r
+end;
+
+begin
+  ?x;
+  ?y;
+  call greater
+end.
