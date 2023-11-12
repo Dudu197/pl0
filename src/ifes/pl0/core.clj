@@ -180,7 +180,7 @@
     (let [value (eval-expr expr env)]
       (set-var env var value))
 
-    [[:statement "call" [:ident name]]]
+    [[:statement "call" [:ident name] & params]]
     (-> (get-proc env name)
         (exec-block (new-env env))
         (get :parent))

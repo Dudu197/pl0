@@ -22,5 +22,5 @@ begin
   *)
   x := 1;
   y := 2;
-  call greater
+  call greater(x, y)
 end.
