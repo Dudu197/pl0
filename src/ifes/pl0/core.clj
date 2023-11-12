@@ -13,7 +13,7 @@
   (insta/parser (clojure.java.io/resource "pl0.bnf")
                 :auto-whitespace whitespace-or-comment))
 
-(defrecord Binding [kind value])
+(defrecord Binding [kind value params])
 
 (defrecord Env [bindings parent])
 
@@ -35,12 +35,13 @@
 (defn def-name
   "Acrescenta uma definição do tipo (`kind`) indicado para `name` com o `value`
   indicado. Não valida se o valor é apropriado para o tipo informado."
-  [env name kind value]
-  (assoc-in env [:bindings name] (->Binding kind value)))
+  ([env name kind value] (def-name env name kind value []))
+  ([env name kind value params]
+   (assoc-in env [:bindings name] (->Binding kind value params))) )
 
 (defn def-var [env name] (def-name env name :var nil))
 (defn def-const [env name value] (def-name env name :const value))
-(defn def-proc [env name params body] (def-name env name :proc body))
+(defn def-proc [env name params body] (def-name env name :proc body params))
 
 
 (defn set-var
@@ -121,8 +122,8 @@
   "Busca as variáveis dentro da lista que contém variáveis e body"
   [vars]
   (if (> (count vars) 1)
+    (butlast vars)
     []
-    (drop-last vars)
     )
   )
 
