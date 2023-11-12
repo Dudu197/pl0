@@ -40,7 +40,7 @@
 
 (defn def-var [env name] (def-name env name :var nil))
 (defn def-const [env name value] (def-name env name :const value))
-(defn def-proc [env name body] (def-name env name :proc body))
+(defn def-proc [env name params body] (def-name env name :proc body))
 
 
 (defn set-var
@@ -117,6 +117,16 @@
                       (recur ds)))))
 
 
+(defn get-vars-in-list
+  "Busca as variáveis dentro da lista que contém variáveis e body"
+  [vars]
+  (if (> (count vars) 1)
+    []
+    (drop-last vars)
+    )
+  )
+
+
 (defn exec-decl
   "Avalia/executa uma declaração de um bloco. Uma declaração pode ser: (i)
   declaração de constantes; (ii) declaração de variáveis; (iii) definição de
@@ -128,7 +138,9 @@
 
     [[:var_decl & var-ids]] (exec-var-decl var-ids env)
 
-    [[:proc_decl [:ident name] body]] (def-proc env name body)
+    [[:proc_decl [:ident name] & vars-and-body]] (def-proc env name (get-vars-in-list vars-and-body)  (last vars-and-body))
+
+    ;[[:proc_decl [:ident name] & params & body]] (def-proc env name params body)
 
     [[:statement & _]] (exec-sttmt decl env)))
 
