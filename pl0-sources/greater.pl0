@@ -5,22 +5,21 @@
 
 var x, y;
 
-procedure greater(c, d);
-var a, b, r;
+procedure greater(a, b);
+(* var a, b, r; *)
+var r;
 begin
+  (*
   a := x;
   b := y;
+  *)
   if a > b then r := a;
   if b > a then r := b;
   !r
 end;
 
 begin
-  (*
   ?x;
   ?y;
-  *)
-  x := 1;
-  y := 2;
   call greater(x, y)
 end.

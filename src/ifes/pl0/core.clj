@@ -91,6 +91,20 @@
     (some? (:parent env)) (get-proc (:parent env) name)
     :else (throw (ex-info (str "Procedure not defined: " name) {}))))
 
+(defn get-proc-params
+  "Retorna os parâmetros de um proc"
+  [env name]
+  (cond
+    (some? (get-in env [:bindings name]))
+    (let [v (get-in env [:bindings name])]
+      (match [(:kind v)]
+             [:var] (throw (ex-info (str "Name is a variable: " name) v))
+             [:const] (throw (ex-info (str "Name is a constante: " name) v))
+             [:proc] (:params v)))
+    (some? (:parent env)) (get-proc (:parent env) name)
+    :else (throw (ex-info (str "Procedure not defined: " name) {})))
+  )
+
 (declare exec-block exec-decl exec-const-decl exec-var-decl
          exec-sttmt exec-progn exec-if exec-while
          eval-expr eval-cond eval-rel-expr)
@@ -170,6 +184,21 @@
          (def-const env name)
          (recur inits1))))
 
+
+(defn create-and-set-var
+  [env name value]
+  (set-var (exec-var-decl [name] env) (last name) (eval-expr value env))
+  )
+
+(defn add-params-to-env
+  "Adiciona parâmetros ao ambiente"
+  [env vars params]
+  (if (empty? vars)
+    env
+    (add-params-to-env (create-and-set-var env (first vars) (first params)) (rest vars) (rest params))
+  )
+)
+
 (defn exec-sttmt
   "Executa um comando (statement) PL/0 e retorn o ambiente resultante."
   [sttmt env]
@@ -182,7 +211,7 @@
 
     [[:statement "call" [:ident name] & params]]
     (-> (get-proc env name)
-        (exec-block (new-env env))
+        (exec-block (add-params-to-env env (get-proc-params env name) params))
         (get :parent))
 
     [[:statement "?" [:ident name]]]
