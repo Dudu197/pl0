@@ -193,7 +193,7 @@
 (defn add-params-to-env
   "Adiciona parâmetros ao ambiente"
   [env vars params]
-  (if (empty? vars)
+  (if (empty? params)
     env
     (add-params-to-env (create-and-set-var env (first vars) (first params)) (rest vars) (rest params))
   )
@@ -211,7 +211,7 @@
 
     [[:statement "call" [:ident name] & params]]
     (-> (get-proc env name)
-        (exec-block (add-params-to-env env (get-proc-params env name) params))
+        (exec-block (add-params-to-env (new-env env) (get-proc-params env name) params))
         (get :parent))
 
     [[:statement "?" [:ident name]]]
