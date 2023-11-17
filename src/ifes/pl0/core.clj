@@ -347,5 +347,6 @@
     [[:factor [:ident name]]] (get-value env name)
     [[:factor [:number n]]] (Integer/parseInt n)
     [[:factor [:expression & _]]] (eval-expr (nth factor 1) env)
+    [[:factor [:string s]]] ( clojure.string/replace (str s)  #"'(.*)'" "$1")
 
     ))
