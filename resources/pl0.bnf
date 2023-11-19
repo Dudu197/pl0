@@ -7,9 +7,11 @@ block = [ const_decl ]
 
 const_decl = <"const"> ident "=" number {<","> ident "=" number} <";"> .
 
+n_idents_decl = ident {<","> ident}
+
 var_decl = <"var"> ident {<","> ident} <";"> .
 
-proc_decl = <"procedure"> ident [<"("> ident {<","> ident} <")">] <";"> block <";"> .
+proc_decl = <"procedure"> ident [<"("> [n_idents_decl] <")">] <";"> block <";"> .
 
 statement = [ ident ":=" expression
             | "call" ident [<"("> expression {<","> expression} <")">]
