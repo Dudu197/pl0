@@ -14,7 +14,7 @@ var_decl = <"var"> ident {<","> ident} <";"> .
 proc_decl = <"procedure"> ident [<"("> [n_idents_decl] <")">] <";"> block <";"> .
 
 statement = [ ident ":=" expression
-            | "call" ident [<"("> expression {<","> expression} <")">]
+            | "call" ident [<"("> [expression {<","> expression}] <")">]
             | "?" ident
             | "!" expression
             | "begin" statement { <";"> statement } <"end">

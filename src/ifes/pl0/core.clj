@@ -131,7 +131,6 @@
                       (exec-decl d1)
                       (recur ds)))))
 
-
 (defn exec-decl
   "Avalia/executa uma declaração de um bloco. Uma declaração pode ser: (i)
   declaração de constantes; (ii) declaração de variáveis; (iii) definição de
@@ -142,6 +141,8 @@
     [[:const_decl & const-inits]] (exec-const-decl const-inits env)
 
     [[:var_decl & var-ids]] (exec-var-decl var-ids env)
+
+    [[:proc_decl [:ident name] body]] (def-proc env name []  body)
 
     [[:proc_decl [:ident name] parameters body]] (def-proc env name (rest parameters)  body)
 
