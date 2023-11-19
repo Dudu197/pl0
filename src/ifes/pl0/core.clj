@@ -144,7 +144,7 @@
 
     [[:proc_decl [:ident name] body]] (def-proc env name []  body)
 
-    [[:proc_decl [:ident name] parameters body]] (def-proc env name (rest parameters)  body)
+    [[:proc_decl [:ident name] parameters body]] (def-proc env name (rest parameters) body)
 
     [[:statement & _]] (exec-sttmt decl env)))
 
@@ -351,6 +351,6 @@
     [[:factor [:ident name]]] (get-value env name)
     [[:factor [:number n]]] (Integer/parseInt n)
     [[:factor [:expression & _]]] (eval-expr (nth factor 1) env)
-    [[:factor [:string s]]] ( clojure.string/replace (str s)  #"'(.*)'" "$1")
+    [[:factor [:string s]]] ( clojure.string/replace (str s)  #"\"(.*)\"" "$1")
 
     ))
