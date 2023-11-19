@@ -307,6 +307,21 @@
       )))
 
 
+(defn concat-strings
+  ([str1, str2] (str str1, str2))
+)
+
+(defn sum-numbers
+  ([num1 num2] (+ num1 num2))
+)
+
+(defn eval-sum
+  ([val1, val2]
+   (if (or (string? val1) (string? val2))
+   (concat-strings val1 val2)
+   (sum-numbers val1 val2)
+   )))
+
 (defn eval-expr
   "Avalia a empressão `expr` no ambiente de execução `env`. Retorna o valor da
   expressão."
@@ -317,7 +332,7 @@
     [[:expression t1 & ts]] (let [v1 (eval-term t1 env)]
                               (eval-expr ts v1 env))
     [["+" t1 & ts]] (let [v1 (eval-term t1 env)]
-                      (eval-expr ts (+ acc v1) env))
+                      (eval-expr ts (eval-sum acc v1) env))
     [["-" t1 & ts]] (let [v1 (eval-term t1 env)]
                       (eval-expr ts (- acc v1) env)))))
 
