@@ -13,13 +13,14 @@ begin
   a := x;
   b := y;
   *)
-  if a > b then r := a;
-  if b > a then r := b;
-  !r
+  if a > b then !a + " é maior que " + b;
+  if b > a then !b + " é maior que " + a
 end;
 
 begin
+  !"Entre com o primeiro número";
   ?x;
+  !"Entre com o segundo número";
   ?y;
   call greater(x, y)
 end.
