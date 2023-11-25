@@ -6,13 +6,8 @@
 var x, y;
 
 procedure greater(a, b);
-(* var a, b, r; *)
 var r;
 begin
-  (*
-  a := x;
-  b := y;
-  *)
   if a > b then !a + " é maior que " + b;
   if b > a then !b + " é maior que " + a
 end;
