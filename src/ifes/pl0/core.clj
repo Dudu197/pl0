@@ -162,10 +162,13 @@
          (recur idents1))))
 
 
-(defn parse-str [s] (clojure.string/replace (str s)  #"\"(.*)\"" "$1"))
+(defn parse-str
+  "Faz o parse de uma String e remove as aspas dela"
+  [s] (clojure.string/replace (str s)  #"\"(.*)\"" "$1"))
 
 
 (defn parse-value
+  "Faz o parse de um valor literal ou inteiro"
   [value]
   (if (str/starts-with? value "\"")
   (parse-str value)
@@ -189,6 +192,7 @@
 
 
 (defn create-and-set-var
+  "Cria uma variável e define o valor dela"
   [env name value]
   (set-var (exec-var-decl [name] env) (last name) (eval-expr value env))
   )
@@ -311,14 +315,17 @@
 
 
 (defn concat-strings
+  "Concatena duas strings"
   ([str1, str2] (str str1, str2))
 )
 
 (defn sum-numbers
+  "Soma dois números inteiros"
   ([num1 num2] (+ num1 num2))
 )
 
 (defn eval-sum
+  "Realiza a soma de dois números inteiros ou concatenação, caso algum dos valores sejam String"
   ([val1, val2]
    (if (or (string? val1) (string? val2))
    (concat-strings val1 val2)
