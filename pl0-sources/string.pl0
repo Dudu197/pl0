@@ -1,12 +1,12 @@
 (* -*- mode:pascal; -*-
  * Exemplo de programa em PL/0.
- * Realiza comparação se valor a é maior que b.
+ * Lê um nome como String e escreve o nome no stdout.
  *)
 
-var x, y;
+var nome;
 begin
-    x := "oi";
-    y := 1 + 1;
-    !x;
-    !y
+    !"Entre com o seu nome:";
+    !"Favor colocar entre aspas duplas";
+    ?nome;
+    !"Seu nome é " + nome
 end.

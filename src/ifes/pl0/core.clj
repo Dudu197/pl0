@@ -1,5 +1,6 @@
 (ns ifes.pl0.core
-  (:require [instaparse.core :as insta]
+  (:require [clojure.string :as str]
+            [instaparse.core :as insta]
             [clojure.core.match :refer [match]]))
 
 (def whitespace-or-comment
@@ -161,6 +162,19 @@
          (recur idents1))))
 
 
+(defn parse-str [s] (clojure.string/replace (str s)  #"\"(.*)\"" "$1"))
+
+
+(defn parse-value
+  [value]
+  (if (str/starts-with? value "\"")
+  (parse-str value)
+  (Integer/parseInt value)
+  )
+)
+
+
+
 (defn exec-const-decl
   "Atualiza o ambiente `env` com as definições das constantes dadas em `inits`.
   Cria um novo ambiente, à partir de `env` em que as constantes comos nomes e
@@ -169,7 +183,7 @@
   (match [inits]
     [[]] env
     [[[:ident name] "=" [:number num] & inits1]]
-    (->> (Integer/parseInt num)
+    (->> (parse-value num)
          (def-const env name)
          (recur inits1))))
 
@@ -207,7 +221,7 @@
     (->> (do (printf "%s? " name)
              (flush)
              (read-line))
-         (Integer/parseInt)
+         (parse-value)
          (set-var env name))
 
     [[:statement "!" expr]]
@@ -351,6 +365,6 @@
     [[:factor [:ident name]]] (get-value env name)
     [[:factor [:number n]]] (Integer/parseInt n)
     [[:factor [:expression & _]]] (eval-expr (nth factor 1) env)
-    [[:factor [:string s]]] ( clojure.string/replace (str s)  #"\"(.*)\"" "$1")
+    [[:factor [:string s]]] (parse-str s)
 
     ))
