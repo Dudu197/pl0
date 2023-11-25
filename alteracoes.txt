@@ -1,0 +1,61 @@
+Todas as mudanças no código podem ser vistas em: https://github.com/Dudu197/pl0/compare/1652901896e711fb82d67df01cd369bfc09a9a3d..main
+
+Recursos adicionados:
+
+############################
+# Passagem de parâmetros:  #
+############################
+
+Foi adicionado a passagem opcional de parâmetros nas procedures. Dessa forma, não foi preciso alterar o código já implementado.
+O arquivo greater.pl0 é um exemplo da implementação de procedures com argumentos.
+O código solicita o que usuário forneça dois valores inteiros, ele irá imprimir qual valor é o maior dos dois.
+
+Para a gramática suportar a passagem de parâmetros durante a declaração de uma procedure, as seguintes alterações foram feitas:
+Alterações na gramática:
+ - Foi criado um símbolo n_idents_decl, representando uma lista de um ou mais idents;
+ - Na declaração da procedure (proc_decl), foi adicionado uma sintaxe opcional de parênteses após o nome da procedure. Dentro dos parênteses, o usuário pode informar opcionalmente um n_idents_decl (uma lista de um ou mais idents), separados por vírgula.
+
+Alterações no Clojure:
+ - No método exec-decl, foi adicionado a variável params parameters para receber os parâmetros quando informados;
+ - Também foi alterado o método def-proc, para pode receber uma lista dos parâmetros da procedure;
+ - Foi adicionado um atributo para os parâmetros no record Binding.
+
+
+Para suportar a passagem de argumentos durante a execução de uma procedure, as seguintes alterações foram feitas:
+Alterações na gramática:
+ - Na execução da procedure (statement call), foi adicionado opcionalmente parênteses após o nome da procedure. Dentro dos parênteses, o usuário pode informar opcionalmente um ou mais expressões (expression), separados por vírgula.
+
+Alterações no Clojure:
+ - A primeira alteração foi no código método exec-sttmt, adicionando suporte a passagem dos argumentos;
+ - Foi criado o método get-proc-params, para retornar os parâmetros previamente salvos de uma procedure;
+ - Depois foi criado o método add-params-to-env, para receber um ambiente, lista de parâmetros e uma lista de argumentos. Esse método irá adicionar os parâmetros como variáveis dentro do ambiente;
+ - Também foi criado o método create-and-set-var, para criar e definir o valor de uma variável.
+
+
+
+############################
+#    Adição de Strings:    #
+############################
+
+Como nova característica a ser adicionada a linguagem foi escolhida a implementação de String.
+Além de possibilitar valores do tipo literal, foi adicionado concatenação, leitura e escrita dos valores.
+Strings devem começar e terminar com aspas duplas (") e não podem conter aspas duplas em seu conteúdo.
+Ao ler uma variável do tipo string, o usuário deve inserir ela também entre aspas.
+
+Para concatenação, foi escolhido o símbolo de soma (+), assim como em várias linguagens de programação.
+
+O arquivo string.pl0 é um exemplo da implementação de string.
+Ele irá solicitar o nome e idade do usuário. Esses valores (literal e inteiro, respectivamente) serão lidos em variáveis, concatenados e imprimidos ao usuário.
+
+Alterações na gramática:
+ - Foi criado um símbolo chamado string;
+ - O símbolo string foi adicionado ao factor;
+
+Alterações no clojure:
+ - No método eval-factor, foi adicionado o suporte a strings;
+ - Foi criado o método parse-str para fazer o parse do objeto para string e remover as aspas duplas de seu conteúdo.
+ - Também foi criado o método eval-sum, para decidir se irá fazer uma operação de soma ou de concatenação (caso algum dos argumentos seja uma string);
+ - O método eval-sum foi adicionado na eval-expr, substituindo a ação de soma;
+ - Os métodos exec-sttmt exec-const-decl também precisaram ser alterado, para possibilitar o uso de strings;
+
+
