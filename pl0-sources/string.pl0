@@ -3,9 +3,10 @@
  * Lê um nome como String e escreve o nome no stdout.
  *)
 
-var nome;
+var intro, nome;
 begin
-    !"Entre com o seu nome:";
+    intro := "Entre com o seu nome:";
+    !intro;
     !"Favor colocar entre aspas duplas";
     ?nome;
     !"Seu nome é " + nome
