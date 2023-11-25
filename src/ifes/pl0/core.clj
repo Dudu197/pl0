@@ -101,7 +101,7 @@
              [:var] (throw (ex-info (str "Name is a variable: " name) v))
              [:const] (throw (ex-info (str "Name is a constante: " name) v))
              [:proc] (:params v)))
-    (some? (:parent env)) (get-proc (:parent env) name)
+    (some? (:parent env)) (get-proc-params (:parent env) name)
     :else (throw (ex-info (str "Procedure not defined: " name) {})))
   )
 
@@ -184,7 +184,7 @@
   [env vars params]
   (if (empty? params)
     env
-    (add-params-to-env (create-and-set-var env (first vars) (first params)) (rest vars) (rest params))
+    (recur (create-and-set-var env (first vars) (first params)) (rest vars) (rest params))
   )
 )
 
