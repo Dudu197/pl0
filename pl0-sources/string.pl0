@@ -1,13 +1,15 @@
 (* -*- mode:pascal; -*-
  * Exemplo de programa em PL/0.
- * Lê um nome como String e escreve o nome no stdout.
+ * Lê um nome como String, sua idade como inteiro e imprime uma concatenação de ambos valores.
  *)
 
-var intro, nome;
+var intro, nome, idade;
 begin
     intro := "Entre com o seu nome:";
     !intro;
     !"Favor colocar entre aspas duplas";
     ?nome;
-    !"Seu nome é " + nome
+    !"Quantos anos você tem?";
+    ?idade;
+    !"Seu nome é " + nome + " e você tem " + idade + " de idade."
 end.

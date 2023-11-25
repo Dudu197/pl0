@@ -9,7 +9,8 @@ procedure greater(a, b);
 var r;
 begin
   if a > b then !a + " é maior que " + b;
-  if b > a then !b + " é maior que " + a
+  if b > a then !b + " é maior que " + a;
+  if b = a then !a + " é igual a " + b
 end;
 
 begin
