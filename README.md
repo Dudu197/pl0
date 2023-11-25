@@ -6,6 +6,8 @@ Exercício da disciplina Teoria da Computação do Instituto Federal de Educaç�
 
 O código base foi fornecido pelo professor, enquanto as implementações abaixo foram desenvolvidas pelo aluno.
 
+![Clique - Veja o código alterado](https://img.shields.io/badge/Clique-Veja_o_código_alterado-007bff?style=for-the-badge)](https://github.com/Dudu197/pl0/compare/1652901896e711fb82d67df01cd369bfc09a9a3d..main)
+
 ## Novas implementações
 
 ### Parâmetros em métodos/procedures
